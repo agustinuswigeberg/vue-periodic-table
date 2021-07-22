@@ -1,17 +1,22 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <PeriodicTable :elements="periodicTableData" />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import PeriodicTable from "./components/PeriodicTable";
+import PeriodicTableData from "./data/periodic-table-data.json";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    PeriodicTable,
+  },
+  data() {
+    return {
+      periodicTableData: PeriodicTableData,
+    };
   },
 };
 </script>
