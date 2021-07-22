@@ -56,7 +56,6 @@ export default {
   created() {
     const vm = this;
     eventBus.$on("ElementClicked", (payload) => {
-      console.log(payload.className);
       if (payload.className === vm.elementBlockClassName)
         vm.highlighted = !vm.highlighted;
     });
