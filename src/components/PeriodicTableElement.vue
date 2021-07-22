@@ -1,10 +1,14 @@
 <template>
-  <div class="periodic-element" :class="`element-block-${element.block}`">
+  <div
+    class="periodic-element"
+    :class="[elementBlockClassName, { 'bg-dark': highlighted }]"
+    @click="toggleHighlight"
+  >
     <div class="row">
-      <div class="col-6 element-symbol">
+      <div class="col-5 element-symbol">
         {{ element.symbol }}
       </div>
-      <div class="col-6 element-number">
+      <div class="col-7 element-number">
         {{ element.atomicNumber }}
       </div>
     </div>
@@ -22,6 +26,8 @@
 </template>
 
 <script>
+import { eventBus } from "../main.js";
+
 export default {
   props: {
     element: {
@@ -37,17 +43,45 @@ export default {
       },
     },
   },
+  computed: {
+    elementBlockClassName() {
+      return `element-block-${this.element.block}`;
+    },
+  },
+  data() {
+    return {
+      highlighted: false,
+    };
+  },
+  created() {
+    const vm = this;
+    eventBus.$on("ElementClicked", (payload) => {
+      console.log(payload.className);
+      if (payload.className === vm.elementBlockClassName)
+        vm.highlighted = !vm.highlighted;
+    });
+  },
+  methods: {
+    toggleHighlight() {
+      eventBus.$emit("ElementClicked", {
+        className: this.elementBlockClassName,
+      });
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .periodic-element {
-  width: 62px;
-  height: 62px;
   color: white;
   text-align: left;
   padding: 2px 4px 3px 4px;
-  margin: 2px;
+  margin: 1px;
+
+  &:hover {
+    opacity: 0.7;
+    cursor: pointer;
+  }
 
   &.element-block-s {
     background: #ad1e2d;
@@ -66,21 +100,21 @@ export default {
   }
 
   .element-number {
-    font-size: 11px;
+    font-size: 0.675rem;
     text-align: right;
-    padding-right: 16px;
+    padding-right: 1rem;
   }
 
   .element-symbol {
-    font-size: 20px;
+    font-size: 1.1rem;
   }
 
   .element-name {
-    font-size: 8px;
+    font-size: 0.5rem;
   }
 
   .element-weight {
-    font-size: 11px;
+    font-size: 0.675rem;
   }
 }
 </style>

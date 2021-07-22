@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container">
+    <div class="container-fluid">
       <table>
         <tr v-for="(elementsRow, rowIndex) in mappedElements" :key="rowIndex">
           <td v-for="(element, colIndex) in elementsRow" :key="colIndex">
@@ -48,6 +48,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-</style>
