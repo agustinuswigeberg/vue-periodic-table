@@ -59,6 +59,10 @@ export default {
       if (payload.className === vm.elementBlockClassName)
         vm.highlighted = !vm.highlighted;
     });
+
+    eventBus.$on("TableMapped", () => {
+      vm.highlighted = false;
+    });
   },
   methods: {
     toggleHighlight() {

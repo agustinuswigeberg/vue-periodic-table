@@ -35,6 +35,8 @@
 
 <script>
 import PeriodicTableElement from "./PeriodicTableElement";
+import { eventBus } from "../main";
+
 const numOfRows = 9;
 const numOfColumns = 18;
 
@@ -62,6 +64,8 @@ export default {
   },
   methods: {
     mapElementsToTable() {
+      eventBus.$emit("TableMapped");
+
       this.mappedElements = [];
       while (this.mappedElements.push(new Array(numOfColumns)) < numOfRows);
 
