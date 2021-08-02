@@ -1,7 +1,7 @@
 <template>
   <div
     class="periodic-element"
-    :class="[elementBlockClassName, { 'bg-dark': highlighted }]"
+    :class="[elementBlockClassName, { 'bg-dark': highlight }]"
     @click="toggleHighlight"
   >
     <div class="row">
@@ -26,8 +26,6 @@
 </template>
 
 <script>
-import { eventBus } from "../main.js";
-
 export default {
   props: {
     element: {
@@ -42,33 +40,18 @@ export default {
         };
       },
     },
+    highlight: {
+      type: Boolean,
+    },
   },
   computed: {
     elementBlockClassName() {
       return `element-block-${this.element.block}`;
     },
   },
-  data() {
-    return {
-      highlighted: false,
-    };
-  },
-  created() {
-    const vm = this;
-    eventBus.$on("ElementClicked", (payload) => {
-      if (payload.className === vm.elementBlockClassName)
-        vm.highlighted = !vm.highlighted;
-    });
-
-    eventBus.$on("TableMapped", () => {
-      vm.highlighted = false;
-    });
-  },
   methods: {
     toggleHighlight() {
-      eventBus.$emit("ElementClicked", {
-        className: this.elementBlockClassName,
-      });
+      this.$emit("elementClicked");
     },
   },
 };

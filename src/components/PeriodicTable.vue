@@ -9,7 +9,12 @@
               :key="rowIndex"
             >
               <td v-for="(element, colIndex) in elementsRow" :key="colIndex">
-                <PeriodicTableElement v-if="element" :element="element" />
+                <PeriodicTableElement
+                  v-if="element"
+                  :element="element"
+                  :highlight="highlightedBlocks[element.block]"
+                  @elementClicked="highlightBlocks(element.block)"
+                />
               </td>
             </tr>
           </table>
@@ -35,7 +40,6 @@
 
 <script>
 import PeriodicTableElement from "./PeriodicTableElement";
-import { eventBus } from "../main";
 
 const numOfRows = 9;
 const numOfColumns = 18;
@@ -57,6 +61,7 @@ export default {
     return {
       mappedElements: [],
       invert: false,
+      highlightedBlocks: {},
     };
   },
   mounted() {
@@ -64,8 +69,6 @@ export default {
   },
   methods: {
     mapElementsToTable() {
-      eventBus.$emit("TableMapped");
-
       this.mappedElements = [];
       while (this.mappedElements.push(new Array(numOfColumns)) < numOfRows);
 
@@ -79,6 +82,16 @@ export default {
           this.mappedElements[element.row - 1][element.column - 1] = element;
         });
       }
+    },
+    highlightBlocks(blockName) {
+      this.highlightedBlocks = {
+        ...this.highlightedBlocks,
+        [blockName]: !this.highlightedBlocks[blockName],
+      };
+      console.log(this.highlightedBlocks);
+    },
+    isHighlighted(blockName) {
+      return this.highlightedBlocks[blockName];
     },
   },
 };
