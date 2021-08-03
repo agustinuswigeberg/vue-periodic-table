@@ -1,12 +1,18 @@
 import { shallowMount } from "@vue/test-utils";
-import HelloWorld from "@/components/HelloWorld.vue";
+import PeriodicTableElement from "../../src/components/PeriodicTableElement";
 
-describe("HelloWorld.vue", () => {
-  it("renders props.msg when passed", () => {
-    const msg = "new message";
-    const wrapper = shallowMount(HelloWorld, {
-      propsData: { msg },
+describe("PeriodicTableElement.vue", () => {
+  it("renders props.element.name when passed", () => {
+    const element = {
+      name: "Hydrogen",
+      atomicNumber: 1,
+      symbol: "H",
+      atomicWeight: "1.008",
+      block: "s",
+    };
+    const wrapper = shallowMount(PeriodicTableElement, {
+      propsData: { element },
     });
-    expect(wrapper.text()).toMatch(msg);
+    expect(wrapper.text()).toMatch(element.name);
   });
 });
