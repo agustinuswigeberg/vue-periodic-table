@@ -1,4 +1,7 @@
-# betao-periodic-table
+# vue-periodic-table
+
+Solution is made for Betao AB's assignment:
+https://github.com/betaoab/front-end-interview
 
 ## Project setup
 
